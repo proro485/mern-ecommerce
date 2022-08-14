@@ -1,8 +1,9 @@
-import type { NextPage } from "next";
+import axios from "axios";
+import type { GetServerSideProps } from "next";
 import ProductCard from "../components/ProductCard";
-import products from "../products";
+import { HomeProps } from "../types";
 
-const Home: NextPage = () => {
+const Home = ({ products }: HomeProps) => {
   return (
     <div className="px-5 sm:px-10 py-4 text-slate-800">
       <div className="text-2xl font-semibold">Latest Products</div>
@@ -16,3 +17,20 @@ const Home: NextPage = () => {
 };
 
 export default Home;
+
+export const getServerSideProps: GetServerSideProps<HomeProps> = async () => {
+  const { data } = await axios.get("http://localhost:3000/api/products/");
+  const products = data.products;
+
+  if (!products) {
+    return {
+      notFound: true,
+    };
+  }
+
+  return {
+    props: {
+      products: products,
+    },
+  };
+};

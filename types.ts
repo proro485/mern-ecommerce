@@ -14,3 +14,7 @@ export interface Product {
 export interface ProductDetailsProps {
   product: Product;
 }
+
+export interface HomeProps {
+  products: Product[];
+}
