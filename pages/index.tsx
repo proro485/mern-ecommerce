@@ -6,7 +6,7 @@ const Home: NextPage = () => {
   return (
     <div className="px-5 sm:px-10 py-4 text-slate-800">
       <div className="text-2xl font-semibold">Latest Products</div>
-      <div className="grid grid-auto-fit-lg">
+      <div className="grid grid-auto-fit-md">
         {products.map((product) => {
           return <ProductCard product={product} key={product._id} />;
         })}

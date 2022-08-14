@@ -1,5 +1,5 @@
-import { ShoppingCartIcon, UserIcon } from "@heroicons/react/outline";
 import Link from "next/link";
+import { BsCart, BsPerson } from "react-icons/bs";
 
 const Header = () => {
   return (
@@ -12,13 +12,13 @@ const Header = () => {
       <span className="flex items-center space-x-5 pt-3 sm:pt-0">
         <Link href="/cart">
           <span className="flex text-sm sm:text-base">
-            <ShoppingCartIcon className="h-5 w-5 mr-2" />
+            <BsCart className="h-4 w-5 mr-2" />
             Cart
           </span>
         </Link>
         <Link href="/login">
           <span className="flex text-sm sm:text-base">
-            <UserIcon className="h-5 w-5 mr-1" />
+            <BsPerson className="h-5 w-5 mr-2" />
             Sign In
           </span>
         </Link>
