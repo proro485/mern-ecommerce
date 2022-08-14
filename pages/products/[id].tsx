@@ -1,7 +1,7 @@
+import axios from "axios";
 import { GetServerSideProps } from "next";
 import Image from "next/image";
 import Rating from "../../components/Rating";
-import products from "../../products";
 import { ProductDetailsProps } from "../../types";
 
 const ProductDetails = ({ product }: ProductDetailsProps) => {
@@ -55,9 +55,10 @@ export default ProductDetails;
 export const getServerSideProps: GetServerSideProps<
   ProductDetailsProps
 > = async (context) => {
-  const { productId } = context.query;
+  const { id } = context.query;
+  const { data } = await axios.get(`http://localhost:3000/api/products/${id}`);
 
-  const product = products.find((product) => product._id === productId);
+  const product = data.product;
 
   if (!product) {
     return {

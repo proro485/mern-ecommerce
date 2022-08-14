@@ -7,9 +7,9 @@ const handler: NextApiHandler = (req, res) => {
     const product = products.find((p) => p._id === id);
 
     if (product) {
-      res.status(200).json({ message: "Success", data: product });
+      res.status(200).json({ message: "Success", product: product });
     } else {
-      res.status(404).json({ message: "Product not found", data: null });
+      res.status(200).json({ message: "Product not found", product: null });
     }
   }
 };
