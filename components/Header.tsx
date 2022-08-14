@@ -3,7 +3,7 @@ import Link from "next/link";
 
 const Header = () => {
   return (
-    <div className="flex flex-col sm:flex-row w-screen justify-between items-center border-b-2 border-slate-800 py-4 px-5 sm:px-20">
+    <div className="flex flex-col sm:flex-row w-screen justify-between items-center border-b-2 border-slate-800 py-4 px-5 sm:px-20 text-slate-800">
       <Link href="/">
         <span className="text-2xl sm:text-3xl font-semibold">
           MERN eCommerce
