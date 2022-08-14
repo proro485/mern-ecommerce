@@ -18,6 +18,7 @@ const Rating = ({
       {Array.from({ length: 5 - Math.ceil(rating) }, (_, i) => (
         <BsStar key={i} className="text-yellow-500" size={18} />
       ))}
+      <span className="ml-2">{numReviews} reviews</span>
     </div>
   );
 };

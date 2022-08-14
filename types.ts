@@ -10,3 +10,7 @@ export interface Product {
   rating: number;
   numReviews: number;
 }
+
+export interface ProductDetailsProps {
+  product: Product;
+}

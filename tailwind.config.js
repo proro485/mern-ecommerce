@@ -5,7 +5,11 @@ module.exports = {
     "./components/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      borderWidth: {
+        px: "1px",
+      },
+    },
   },
   plugins: [require("@shrutibalasa/tailwind-grid-auto-fit")],
 };
