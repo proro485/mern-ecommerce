@@ -1,8 +1,9 @@
-import axios from "axios";
 import { GetServerSideProps } from "next";
 import Image from "next/image";
 import Rating from "../../components/Rating";
+import Product from "../../model/productModel";
 import { ProductDetailsProps } from "../../types";
+import connectMongo from "../../utils/connectMongo";
 
 const ProductDetails = ({ product }: ProductDetailsProps) => {
   return (
@@ -52,23 +53,23 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
 
 export default ProductDetails;
 
-export const getServerSideProps: GetServerSideProps<
-  ProductDetailsProps
-> = async (context) => {
+export const getServerSideProps: GetServerSideProps = async (context) => {
   const { id } = context.query;
-  const { data } = await axios.get(`http://localhost:3000/api/products/${id}`);
 
-  const product = data.product;
+  await connectMongo();
 
-  if (!product) {
+  try {
+    const data = await Product.findById(id);
+    const product = JSON.parse(JSON.stringify(data));
+
+    return {
+      props: {
+        product: product,
+      },
+    };
+  } catch (e) {
     return {
       notFound: true,
     };
   }
-
-  return {
-    props: {
-      product: product,
-    },
-  };
 };

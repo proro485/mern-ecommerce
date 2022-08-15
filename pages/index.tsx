@@ -1,7 +1,8 @@
-import axios from "axios";
 import type { GetServerSideProps } from "next";
 import ProductCard from "../components/ProductCard";
+import Product from "../model/productModel";
 import { HomeProps } from "../types";
+import connectMongo from "../utils/connectMongo";
 
 const Home = ({ products }: HomeProps) => {
   return (
@@ -18,19 +19,24 @@ const Home = ({ products }: HomeProps) => {
 
 export default Home;
 
-export const getServerSideProps: GetServerSideProps<HomeProps> = async () => {
-  const { data } = await axios.get("http://localhost:3000/api/products/");
-  const products = data.products;
+export const getServerSideProps: GetServerSideProps = async () => {
+  await connectMongo();
 
-  if (!products) {
+  try {
+    const data = await Product.find({});
+    const products = JSON.parse(JSON.stringify(data));
+
+    console.log("Products :", products);
+
+    return {
+      props: {
+        products: products,
+      },
+    };
+  } catch (e) {
+    console.log("Error :", e);
     return {
       notFound: true,
     };
   }
-
-  return {
-    props: {
-      products: products,
-    },
-  };
 };
