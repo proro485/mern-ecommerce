@@ -11,6 +11,7 @@
     "data:destroy": "ts-node --project tsconfig.seeder.json data/seeder.ts -d"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^1.8.4",
     "axios": "^0.27.2",
     "bcryptjs": "^2.4.3",
     "dotenv": "^16.0.1",
@@ -18,7 +19,8 @@
     "next": "12.2.5",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-icons": "^4.4.0"
+    "react-icons": "^4.4.0",
+    "react-redux": "^8.0.2"
   },
   "devDependencies": {
     "@shrutibalasa/tailwind-grid-auto-fit": "^1.1.0",

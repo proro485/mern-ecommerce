@@ -1,11 +1,28 @@
 import { GetServerSideProps } from "next";
 import Image from "next/image";
+import { useState } from "react";
+import { AiFillMinusSquare, AiFillPlusSquare } from "react-icons/ai";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { setCart } from "../../app/slices/cartSlice";
 import Rating from "../../components/Rating";
 import Product from "../../model/productModel";
 import { ProductDetailsProps } from "../../types";
 import connectMongo from "../../utils/connectMongo";
 
 const ProductDetails = ({ product }: ProductDetailsProps) => {
+  const dispatch = useAppDispatch();
+  const cartItems = useAppSelector((state) => state.cart.cartItems);
+
+  const [quantity, setQuantity] = useState(product.countInStock > 0 ? 1 : 0);
+
+  const addToCart = () => {
+    const updatedCart = cartItems.filter(
+      (item) => item.product._id != product._id
+    );
+    updatedCart.push({ product, quantity });
+    dispatch(setCart({ cartItems: updatedCart }));
+  };
+
   return (
     <div className="flex justify-center">
       <div className="grid grid-auto-fit-lg mx-5 my-10 w-full lg:w-4/5">
@@ -36,10 +53,41 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
                 {product.countInStock > 0 ? "In Stock" : "Out of Stock"}
               </span>
             </div>
+            <div className="flex justify-between items-center px-10 py-4 border-b-px border-slate-800">
+              <span className="sm:text-lg">Quantity :</span>
+              <div className="flex items-center">
+                <button
+                  disabled={quantity <= 1}
+                  className={`cursor-pointer outline-none ${
+                    quantity <= 1 ? "text-slate-600" : "text-slate-800"
+                  }`}
+                  onClick={() => setQuantity((val) => val - 1)}
+                >
+                  <AiFillMinusSquare size={22} />
+                </button>
+                <span className="px-4 w-7 flex justify-center text-lg">
+                  {quantity}
+                </span>
+                <button
+                  disabled={quantity == product.countInStock}
+                  className={`cursor-pointer outline-none ${
+                    quantity == product.countInStock
+                      ? "text-slate-600"
+                      : "text-slate-800"
+                  }`}
+                  onClick={() => setQuantity((val) => val + 1)}
+                >
+                  <AiFillPlusSquare size={22} />
+                </button>
+              </div>
+            </div>
             <div className="flex justify-between px-2 py-2">
               <button
-                className="w-full bg-slate-800 text-white py-4"
-                disabled={product.countInStock > 0}
+                className={`w-full ${
+                  product.countInStock > 0 ? "bg-slate-800" : "bg-slate-600"
+                } text-white py-4 cursor-pointer`}
+                disabled={product.countInStock <= 0}
+                onClick={addToCart}
               >
                 Add to Cart
               </button>

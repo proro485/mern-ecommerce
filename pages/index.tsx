@@ -1,10 +1,20 @@
 import type { GetServerSideProps } from "next";
+import { useEffect } from "react";
+import { useAppDispatch } from "../app/hooks";
+import { setCart } from "../app/slices/cartSlice";
 import ProductCard from "../components/ProductCard";
 import Product from "../model/productModel";
 import { HomeProps } from "../types";
 import connectMongo from "../utils/connectMongo";
 
 const Home = ({ products }: HomeProps) => {
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    const cartItems = JSON.parse(localStorage.getItem("cartItems") || "[]");
+    dispatch(setCart({ cartItems }));
+  }, []);
+
   return (
     <div className="px-5 sm:px-10 py-4 text-slate-800">
       <div className="text-2xl font-semibold">Latest Products</div>
