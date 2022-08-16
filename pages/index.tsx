@@ -1,6 +1,6 @@
 import type { GetServerSideProps } from "next";
 import ProductCard from "../components/ProductCard";
-import Product from "../model/productModel";
+import Product from "../models/productModel";
 import { HomeProps } from "../types";
 import connectMongo from "../utils/connectMongo";
 
@@ -20,13 +20,11 @@ const Home = ({ products }: HomeProps) => {
 export default Home;
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  await connectMongo();
-
   try {
+    await connectMongo();
+
     const data = await Product.find({});
     const products = JSON.parse(JSON.stringify(data));
-
-    console.log("Products :", products);
 
     return {
       props: {
@@ -34,7 +32,6 @@ export const getServerSideProps: GetServerSideProps = async () => {
       },
     };
   } catch (e) {
-    console.log("Error :", e);
     return {
       notFound: true,
     };

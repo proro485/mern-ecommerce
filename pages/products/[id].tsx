@@ -5,7 +5,7 @@ import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { setCart } from "../../app/slices/cartSlice";
 import QuantitySelector from "../../components/QuantitySelector";
 import Rating from "../../components/Rating";
-import Product from "../../model/productModel";
+import Product from "../../models/productModel";
 import { ProductDetailsProps } from "../../types";
 import connectMongo from "../../utils/connectMongo";
 
@@ -91,11 +91,11 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
 export default ProductDetails;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { id } = context.query;
-
-  await connectMongo();
-
   try {
+    const { id } = context.query;
+
+    await connectMongo();
+
     const data = await Product.findById(id);
     const product = JSON.parse(JSON.stringify(data));
 

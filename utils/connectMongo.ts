@@ -9,7 +9,7 @@ const connectMongo = async () => {
   try {
     mongoose.connect(process.env.MONGO_URI ?? "");
   } catch (e) {
-    console.log("Error :", e);
+    throw e;
   }
 };
 
