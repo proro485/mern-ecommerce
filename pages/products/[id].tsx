@@ -1,9 +1,9 @@
 import { GetServerSideProps } from "next";
 import Image from "next/image";
 import { useState } from "react";
-import { AiFillMinusSquare, AiFillPlusSquare } from "react-icons/ai";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { setCart } from "../../app/slices/cartSlice";
+import QuantitySelector from "../../components/QuantitySelector";
 import Rating from "../../components/Rating";
 import Product from "../../model/productModel";
 import { ProductDetailsProps } from "../../types";
@@ -21,6 +21,14 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
     );
     updatedCart.push({ product, quantity });
     dispatch(setCart({ cartItems: updatedCart }));
+  };
+
+  const increaseQuantity = () => {
+    setQuantity((val) => val + 1);
+  };
+
+  const decreaseQuantity = () => {
+    setQuantity((val) => val - 1);
   };
 
   return (
@@ -55,31 +63,12 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
             </div>
             <div className="flex justify-between items-center px-10 py-4 border-b-px border-slate-800">
               <span className="sm:text-lg">Quantity :</span>
-              <div className="flex items-center">
-                <button
-                  disabled={quantity <= 1}
-                  className={`cursor-pointer outline-none ${
-                    quantity <= 1 ? "text-slate-600" : "text-slate-800"
-                  }`}
-                  onClick={() => setQuantity((val) => val - 1)}
-                >
-                  <AiFillMinusSquare size={22} />
-                </button>
-                <span className="px-4 w-7 flex justify-center text-lg">
-                  {quantity}
-                </span>
-                <button
-                  disabled={quantity == product.countInStock}
-                  className={`cursor-pointer outline-none ${
-                    quantity == product.countInStock
-                      ? "text-slate-600"
-                      : "text-slate-800"
-                  }`}
-                  onClick={() => setQuantity((val) => val + 1)}
-                >
-                  <AiFillPlusSquare size={22} />
-                </button>
-              </div>
+              <QuantitySelector
+                quantity={quantity}
+                increaseQuantity={increaseQuantity}
+                decreaseQuantity={decreaseQuantity}
+                countInStock={product.countInStock}
+              />
             </div>
             <div className="flex justify-between px-2 py-2">
               <button
