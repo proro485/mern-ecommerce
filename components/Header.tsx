@@ -26,7 +26,7 @@ const Header = () => {
             Cart
           </span>
         </Link>
-        <Link href="/login">
+        <Link href="/users/login">
           <span className="flex text-md sm:text-lg cursor-pointer">
             <BsPerson className="mr-2" size={22} />
             Sign In

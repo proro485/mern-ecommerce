@@ -18,3 +18,14 @@ export interface ProductDetailsProps {
 export interface HomeProps {
   products: Product[];
 }
+
+export interface User {
+  _id: string;
+  name: string;
+  email: string;
+  isAdmin: boolean;
+}
+
+export interface ProfileProps {
+  user: User;
+}
