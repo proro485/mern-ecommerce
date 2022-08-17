@@ -1,13 +1,15 @@
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { AiOutlineDelete } from "react-icons/ai";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { setCart } from "../app/slices/cartSlice";
 import QuantitySelector from "../components/QuantitySelector";
 
 const Cart = () => {
-  const cartItems = useAppSelector((state) => state.cart.cartItems);
+  const router = useRouter();
   const dispatch = useAppDispatch();
+  const cartItems = useAppSelector((state) => state.cart.cartItems);
 
   const handleIncrease = (id: string) => {
     const updatedCartItems = cartItems.map((item) => {
@@ -34,6 +36,10 @@ const Cart = () => {
   const removeItem = (id: string) => {
     const updatedCartItems = cartItems.filter((item) => item.product._id != id);
     dispatch(setCart({ cartItems: updatedCartItems }));
+  };
+
+  const handleClick = () => {
+    router.push("/shipping");
   };
 
   if (!cartItems.length) {
@@ -108,6 +114,7 @@ const Cart = () => {
             <div className="flex justify-center pt-5">
               <button
                 disabled={!cartItems.length}
+                onClick={handleClick}
                 className="sm:text-xl bg-slate-800 text-white py-3 sm:py-4 px-16"
               >
                 Proceed to Checkout

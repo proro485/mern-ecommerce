@@ -1,6 +1,7 @@
 import { GetServerSideProps } from "next";
 import Image from "next/image";
 import { useState } from "react";
+import { useToasts } from "react-toast-notifications";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { setCart } from "../../app/slices/cartSlice";
 import QuantitySelector from "../../components/QuantitySelector";
@@ -10,6 +11,7 @@ import { ProductDetailsProps } from "../../types";
 import connectMongo from "../../utils/connectMongo";
 
 const ProductDetails = ({ product }: ProductDetailsProps) => {
+  const { addToast } = useToasts();
   const dispatch = useAppDispatch();
   const cartItems = useAppSelector((state) => state.cart.cartItems);
 
@@ -21,6 +23,10 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
     );
     updatedCart.push({ product, quantity });
     dispatch(setCart({ cartItems: updatedCart }));
+    addToast("Added to cart", {
+      appearance: "success",
+      autoDismiss: true,
+    });
   };
 
   const increaseQuantity = () => {
