@@ -24,9 +24,13 @@ const Login = () => {
       config
     );
 
-    dispatch(setUser(data.user));
-    localStorage.setItem("user", JSON.stringify(data.user));
-    router.replace("/");
+    if (!data.error) {
+      dispatch(setUser(data.user));
+      localStorage.setItem("user", JSON.stringify(data.user));
+      router.replace("/");
+    } else {
+      alert(data.error);
+    }
   };
 
   return (
