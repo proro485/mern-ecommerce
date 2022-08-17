@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { BsCart, BsPerson } from "react-icons/bs";
+import { IoIosLogOut } from "react-icons/io";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { setCart } from "../app/slices/cartSlice";
 import { setUser } from "../app/slices/userSlice";
@@ -22,7 +23,7 @@ const Header = () => {
   }, []);
 
   const handleClick = async () => {
-    if (Object.entries(user).length !== 0) {
+    if (Object.entries(user).length) {
       const { data } = await axios.post("/api/users/logout");
       if (!data.error) {
         dispatch(setUser({}));
@@ -44,18 +45,33 @@ const Header = () => {
         </span>
       </Link>
       <span className="flex items-center space-x-5 pt-3 sm:pt-0">
-        <Link href="/cart" className="">
+        <Link href="/cart">
           <span className="flex text-md sm:text-lg cursor-pointer">
             <BsCart className="mr-2" size={20} />
             Cart
+          </span>
+        </Link>
+        <Link href="/users/profile">
+          <span
+            className={`flex text-md sm:text-lg cursor-pointer ${
+              Object.entries(user).length ? "visible" : "hidden"
+            }`}
+          >
+            <BsPerson className="mr-2" size={22} />
+            Profile
           </span>
         </Link>
         <span
           className="flex text-md sm:text-lg cursor-pointer"
           onClick={handleClick}
         >
-          <BsPerson className="mr-2" size={22} />
-          {Object.entries(user).length !== 0 ? "Logout" : "Sign In"}
+          {Object.entries(user).length ? (
+            <IoIosLogOut className="mr-2" size={22} />
+          ) : (
+            <BsPerson className="mr-2" size={22} />
+          )}
+
+          {Object.entries(user).length ? "Logout" : "Sign In"}
         </span>
       </span>
     </div>
