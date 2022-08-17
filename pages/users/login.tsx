@@ -1,8 +1,14 @@
 import axios from "axios";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useState } from "react";
+import { useAppDispatch } from "../../app/hooks";
+import { setUser } from "../../app/slices/userSlice";
 
 const Login = () => {
+  const router = useRouter();
+  const dispatch = useAppDispatch();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -18,7 +24,9 @@ const Login = () => {
       config
     );
 
+    dispatch(setUser(data.user));
     localStorage.setItem("user", JSON.stringify(data.user));
+    router.replace("/");
   };
 
   return (
