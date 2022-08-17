@@ -15,27 +15,34 @@ const Login = () => {
   const [password, setPassword] = useState("");
 
   const handleLogin = async () => {
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
-    const { data } = await axios.post(
-      "/api/users/login",
-      { email, password },
-      config
-    );
+    try {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
+      const { data } = await axios.post(
+        "/api/users/login",
+        { email, password },
+        config
+      );
 
-    if (!data.error) {
-      dispatch(setUser(data.user));
-      localStorage.setItem("user", JSON.stringify(data.user));
-      router.replace("/");
-      addToast(data.message, {
-        appearance: "success",
-        autoDismiss: true,
-      });
-    } else {
-      addToast(data.error, {
+      if (!data.error) {
+        dispatch(setUser(data.user));
+        localStorage.setItem("user", JSON.stringify(data.user));
+        router.replace("/");
+        addToast(data.message, {
+          appearance: "success",
+          autoDismiss: true,
+        });
+      } else {
+        addToast(data.error, {
+          appearance: "error",
+          autoDismiss: true,
+        });
+      }
+    } catch (e) {
+      addToast("Client Side Error", {
         appearance: "error",
         autoDismiss: true,
       });

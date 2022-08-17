@@ -38,7 +38,7 @@ const Cart = () => {
 
   if (!cartItems.length) {
     return (
-      <div className="flex flex-col items-center justify-center h-full mt-80">
+      <div className="flex flex-col items-center justify-center h-full mt-[35vh]">
         <span className="text-2xl font-semibold text-slate-800">
           Your Cart is empty :(
         </span>

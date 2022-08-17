@@ -7,11 +7,11 @@ import generateToken from "../../../utils/generateToken";
 const profileUpdateHandler: NextApiHandler = async (req, res) => {
   if (req.method === "PUT") {
     try {
-      const { name, email, password } = req.body;
+      const { _id, name, email, password } = req.body;
 
       await connectMongo();
 
-      const user = await User.findOne({ email });
+      const user = await User.findById({ _id });
 
       user.name = name || user.name;
       user.email = email || user.email;
@@ -32,7 +32,7 @@ const profileUpdateHandler: NextApiHandler = async (req, res) => {
         });
 
         res.json({
-          message: "User created successfully",
+          message: "User was updated successfully",
           user: {
             _id: updatedUser._id,
             name: updatedUser.name,
@@ -42,7 +42,7 @@ const profileUpdateHandler: NextApiHandler = async (req, res) => {
         });
       } else {
         res.json({
-          error: "User not found",
+          error: "There was an error while updating user",
         });
       }
     } catch (e) {
