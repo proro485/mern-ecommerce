@@ -24,15 +24,20 @@ const Header = () => {
   const handleClick = async () => {
     if (Object.entries(user).length !== 0) {
       const { data } = await axios.post("/api/users/logout");
-      dispatch(setUser({}));
-      localStorage.removeItem("user");
+      if (!data.error) {
+        dispatch(setUser({}));
+        localStorage.removeItem("user");
+        router.push("/");
+      } else {
+        alert(data.error);
+      }
     } else {
       router.push("/users/login");
     }
   };
 
   return (
-    <div className="flex flex-col sm:flex-row w-screen justify-between items-center border-b-px border-slate-800 py-4 px-5 sm:px-20 text-slate-800">
+    <div className="flex flex-col sm:flex-row w-screen justify-between items-center border-b-px border-slate-800 py-4 px-5 sm:px-20 text-slate-800 sticky top-0 bg-white z-10">
       <Link href="/">
         <span className="text-2xl sm:text-3xl font-semibold cursor-pointer">
           MERN eCommerce
