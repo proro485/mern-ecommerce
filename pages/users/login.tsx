@@ -50,7 +50,7 @@ const Login = () => {
   };
 
   return (
-    <div className="flex flex-col items-center space-y-5 text-slate-800 my-56 sm:my-60">
+    <div className="flex flex-col items-center space-y-5 text-slate-800 my-[20vh] sm:my-[25vh]">
       <div className="text-3xl mb-3 font-semibold">Sign In</div>
       <input
         type="text"

@@ -51,7 +51,7 @@ const Register = () => {
   };
 
   return (
-    <div className="flex flex-col items-center space-y-5 text-slate-800 my-48 sm:my-52">
+    <div className="flex flex-col items-center space-y-5 text-slate-800 my-[18vh] sm:my-[22vh]">
       <div className="text-3xl mb-3 font-semibold">Sign Up</div>
       <input
         type="text"

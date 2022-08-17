@@ -6,7 +6,7 @@ import { BsCart, BsPerson } from "react-icons/bs";
 import { IoIosLogOut } from "react-icons/io";
 import { useToasts } from "react-toast-notifications";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
-import { setCart } from "../app/slices/cartSlice";
+import { setCart, setShippingAddress } from "../app/slices/cartSlice";
 import { setUser } from "../app/slices/userSlice";
 
 const Header = () => {
@@ -19,7 +19,11 @@ const Header = () => {
   useEffect(() => {
     const cartItems = JSON.parse(localStorage.getItem("cartItems") || "[]");
     const user = JSON.parse(localStorage.getItem("user") || "{}");
+    const shippingAddress = JSON.parse(
+      localStorage.getItem("shippingAddress") || "null"
+    );
 
+    dispatch(setShippingAddress(shippingAddress));
     dispatch(setUser(user));
     dispatch(setCart({ cartItems }));
   }, []);

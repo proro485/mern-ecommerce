@@ -6,12 +6,21 @@ interface CartItem {
   quantity: number;
 }
 
+interface ShippingAddress {
+  address: string;
+  city: string;
+  postalCode: string;
+  country: string;
+}
+
 interface CartState {
   cartItems: CartItem[];
+  shippingAddress: ShippingAddress | null;
 }
 
 const initialState: CartState = {
   cartItems: [],
+  shippingAddress: null,
 };
 
 const cartSlice = createSlice({
@@ -22,9 +31,13 @@ const cartSlice = createSlice({
       state.cartItems = payload.cartItems;
       localStorage.setItem("cartItems", JSON.stringify(payload.cartItems));
     },
+    setShippingAddress: (state, { payload }: { payload: ShippingAddress }) => {
+      state.shippingAddress = payload;
+      localStorage.setItem("shippingAddress", JSON.stringify(payload));
+    },
   },
 });
 
-export const { setCart } = cartSlice.actions;
+export const { setCart, setShippingAddress } = cartSlice.actions;
 
 export default cartSlice.reducer;
