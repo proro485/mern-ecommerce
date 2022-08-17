@@ -115,7 +115,7 @@ const Cart = () => {
               <button
                 disabled={!cartItems.length}
                 onClick={handleClick}
-                className="sm:text-xl bg-slate-800 text-white py-3 sm:py-4 px-16"
+                className="sm:text-lg bg-slate-800 text-white py-3 sm:py-3 w-full mx-3 sm:w-1/2"
               >
                 Proceed to Checkout
               </button>
