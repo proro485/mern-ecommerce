@@ -4,12 +4,14 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { BsCart, BsPerson } from "react-icons/bs";
 import { IoIosLogOut } from "react-icons/io";
+import { useToasts } from "react-toast-notifications";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { setCart } from "../app/slices/cartSlice";
 import { setUser } from "../app/slices/userSlice";
 
 const Header = () => {
   const router = useRouter();
+  const { addToast } = useToasts();
 
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.user.user);
@@ -29,8 +31,15 @@ const Header = () => {
         dispatch(setUser({}));
         localStorage.removeItem("user");
         router.push("/");
+        addToast(data.message, {
+          appearance: "success",
+          autoDismiss: true,
+        });
       } else {
-        alert(data.error);
+        addToast(data.error, {
+          appearance: "error",
+          autoDismiss: true,
+        });
       }
     } else {
       router.push("/users/login");

@@ -2,11 +2,13 @@ import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
+import { useToasts } from "react-toast-notifications";
 import { useAppDispatch } from "../../app/hooks";
 import { setUser } from "../../app/slices/userSlice";
 
 const Register = () => {
   const router = useRouter();
+  const { addToast } = useToasts();
   const dispatch = useAppDispatch();
 
   const [name, setName] = useState("");
@@ -29,8 +31,15 @@ const Register = () => {
       dispatch(setUser(data.user));
       localStorage.setItem("user", JSON.stringify(data.user));
       router.replace("/");
+      addToast(data.message, {
+        appearance: "success",
+        autoDismiss: true,
+      });
     } else {
-      alert(data.error);
+      addToast(data.error, {
+        appearance: "error",
+        autoDismiss: true,
+      });
     }
   };
 
