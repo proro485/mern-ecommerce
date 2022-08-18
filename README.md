@@ -1,34 +1,62 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# MERN eCommerce
 
-## Getting Started
+### Deployed Site Link : [MERN eCommerce](https://mern-ecommerce-omega.vercel.app/)
 
-First, run the development server:
+<br>
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+### This eCommerce site has been created using the following technologies:
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+1. **Next.js** : Used for Both Frontend and Backend.
+1. **Redux** : Used to manage and consume client state.
+1. **TailwindCSS** : Used to style the frontend.
+1. **Typescript** : Used to type check the code.
+1. **JWT** : Used for authorization of users.
+1. **React Hot Toast** : For displaying Toast Notifications.
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+<br>
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+# Some Screenshots:
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+## Desktop
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+<br>
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+![Home Screen](./screenshots/desktop/1_home_screen.png)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+![Login Screen](./screenshots/desktop/2_login_screen.png)
 
-## Deploy on Vercel
+![Register Screen](./screenshots/desktop/3_register_screen.png)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+![Product Screen](./screenshots/desktop/4_product_screen.png)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+![Cart Screen](./screenshots/desktop/5_cart_screen.png)
+
+![Shipping Screen](./screenshots/desktop/6_shipping_screen.png)
+
+![Payment Screen](./screenshots/desktop/7_payment_screen.png)
+
+![Profile and Order Screen](./screenshots/desktop/8_profile_and_order_screen.png)
+
+## Mobile
+
+---
+
+<br>
+
+![Home Screen Mobile](./screenshots/mobile/1_home_screen.png)
+
+![Login Screen Mobile](./screenshots/mobile/2_login_screen.png)
+
+![Register Screen Mobile](./screenshots/mobile/3_register_screen.png)
+
+![Product Screen Mobile](./screenshots/mobile/4_product_screen.png)
+
+![Cart Screen Mobile](./screenshots/mobile/5_cart_screen.png)
+
+![Shipping Screen Mobile](./screenshots/mobile/6_shipping_screen.png)
+
+![Payment Screen Mobile](./screenshots/mobile/7_payment_screen.png)
+
+![Profile and Order Screen Mobile](./screenshots/mobile/8_profile_and_order_screen.png)
