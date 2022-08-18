@@ -39,6 +39,8 @@ const Login = () => {
         });
       }
     } catch (e) {
+      console.log(e);
+
       toast.error("Client Side Error", {
         position: "top-center",
       });
