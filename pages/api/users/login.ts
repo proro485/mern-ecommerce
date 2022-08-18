@@ -38,11 +38,11 @@ const loginHandler: NextApiHandler = async (req, res) => {
         res.status(401).json({
           error: "Invalid Password",
         });
+      } else if (!user) {
+        res.status(401).json({
+          error: "User not found",
+        });
       }
-
-      res.status(401).json({
-        error: "User not found",
-      });
     } catch (e) {
       res.status(500).json({ error: e });
     }
