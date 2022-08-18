@@ -2,13 +2,12 @@ import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import { useToasts } from "react-toast-notifications";
+import toast from "react-hot-toast";
 import { useAppDispatch } from "../../app/hooks";
 import { setUser } from "../../app/slices/userSlice";
 
 const Register = () => {
   const router = useRouter();
-  const { addToast } = useToasts();
   const dispatch = useAppDispatch();
 
   const [name, setName] = useState("");
@@ -32,20 +31,17 @@ const Register = () => {
         dispatch(setUser(data.user));
         localStorage.setItem("user", JSON.stringify(data.user));
         router.replace("/");
-        addToast(data.message, {
-          appearance: "success",
-          autoDismiss: true,
+        toast.success(data.message, {
+          position: "top-center",
         });
       } else {
-        addToast(data.error, {
-          appearance: "error",
-          autoDismiss: true,
+        toast.success(data.error, {
+          position: "top-center",
         });
       }
     } catch (e) {
-      addToast("Client Side Error", {
-        appearance: "error",
-        autoDismiss: true,
+      toast.error("Client Side Error", {
+        position: "top-center",
       });
     }
   };

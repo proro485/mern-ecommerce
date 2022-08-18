@@ -3,14 +3,13 @@ import { GetServerSideProps } from "next";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import nookies from "nookies";
-import { useToasts } from "react-toast-notifications";
+import toast from "react-hot-toast";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { setCart } from "../app/slices/cartSlice";
 import protectRoute from "../middleware/protectRoute";
 
 const Payment = () => {
   const router = useRouter();
-  const { addToast } = useToasts();
   const dispatch = useAppDispatch();
 
   const user = useAppSelector((state) => state.user.user);
@@ -46,23 +45,12 @@ const Payment = () => {
         localStorage.removeItem("cartItems");
         dispatch(setCart({ cartItems: [] }));
         router.replace(`/users/profile`);
-        addToast(data.message, {
-          appearance: "success",
-          autoDismiss: true,
-        });
+        toast.success(data.message, { position: "top-center" });
       } else {
-        addToast(data.error, {
-          appearance: "error",
-          autoDismiss: true,
-        });
+        toast.error(data.error, { position: "top-center" });
       }
     } catch (e) {
-      console.log("Error :", e);
-
-      addToast("Client Side Error", {
-        appearance: "error",
-        autoDismiss: true,
-      });
+      toast.error("Client Side Error", { position: "top-center" });
     }
   };
 

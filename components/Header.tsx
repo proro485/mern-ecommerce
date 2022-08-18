@@ -2,16 +2,15 @@ import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
+import toast from "react-hot-toast";
 import { BsCart, BsPerson } from "react-icons/bs";
 import { IoIosLogOut } from "react-icons/io";
-import { useToasts } from "react-toast-notifications";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { setCart, setShippingAddress } from "../app/slices/cartSlice";
 import { setUser } from "../app/slices/userSlice";
 
 const Header = () => {
   const router = useRouter();
-  const { addToast } = useToasts();
 
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.user.user);
@@ -35,14 +34,12 @@ const Header = () => {
         dispatch(setUser(null));
         localStorage.removeItem("user");
         router.push("/");
-        addToast(data.message, {
-          appearance: "success",
-          autoDismiss: true,
+        toast.success(data.message, {
+          position: "top-center",
         });
       } else {
-        addToast(data.error, {
-          appearance: "error",
-          autoDismiss: true,
+        toast.error(data.error, {
+          position: "top-center",
         });
       }
     } else {

@@ -2,7 +2,7 @@ import axios from "axios";
 import { GetServerSideProps } from "next";
 import nookies from "nookies";
 import { useEffect, useState } from "react";
-import { useToasts } from "react-toast-notifications";
+import toast from "react-hot-toast";
 import { useAppDispatch } from "../../app/hooks";
 import { setUser } from "../../app/slices/userSlice";
 import protectRoute from "../../middleware/protectRoute";
@@ -12,7 +12,6 @@ import { ProfileProps } from "../../types";
 import connectMongo from "../../utils/connectMongo";
 
 const Profile = (props: ProfileProps) => {
-  const { addToast } = useToasts();
   const dispatch = useAppDispatch();
 
   const [name, setName] = useState(props.user.name);
@@ -54,22 +53,17 @@ const Profile = (props: ProfileProps) => {
       if (!data.error) {
         dispatch(setUser(data.user));
         localStorage.setItem("user", JSON.stringify(data.user));
-        addToast(data.message, {
-          appearance: "success",
-          autoDismiss: true,
+        toast.success(data.message, {
+          position: "top-center",
         });
       } else {
-        addToast(data.error, {
-          appearance: "error",
-          autoDismiss: true,
+        toast.error(data.error, {
+          position: "top-center",
         });
       }
     } catch (e) {
-      console.log(e);
-
-      addToast("Client Side Error", {
-        appearance: "error",
-        autoDismiss: true,
+      toast.error("Client Side Error", {
+        position: "top-center",
       });
     }
   };
