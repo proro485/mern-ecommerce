@@ -70,7 +70,7 @@ const Login = () => {
           Sign In
         </button>
       </div>
-      <Link href="/users/register">Don't have an account? Click here</Link>
+      <Link href="/users/register">Dont have an account? Click here</Link>
     </div>
   );
 };
