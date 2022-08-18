@@ -1,9 +1,12 @@
 import axios from "axios";
+import { GetServerSideProps } from "next";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import nookies from "nookies";
 import { useToasts } from "react-toast-notifications";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { setCart } from "../app/slices/cartSlice";
+import protectRoute from "../middleware/protectRoute";
 
 const Payment = () => {
   const router = useRouter();
@@ -161,3 +164,31 @@ const Payment = () => {
 };
 
 export default Payment;
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  try {
+    const token = nookies.get(context).token;
+
+    const isAuthorized = token && (protectRoute(token) as any);
+
+    if (!isAuthorized) {
+      return {
+        redirect: {
+          destination: "/users/login",
+        },
+        props: {},
+      };
+    }
+
+    return {
+      props: {},
+    };
+  } catch (e) {
+    return {
+      redirect: {
+        destination: "/users/login",
+      },
+      props: {},
+    };
+  }
+};

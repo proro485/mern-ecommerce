@@ -77,11 +77,24 @@ const Shipping = () => {
 export default Shipping;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const token = nookies.get(context).token;
+  try {
+    const token = nookies.get(context).token;
 
-  const isAuthorized = token && (protectRoute(token) as any);
+    const isAuthorized = token && (protectRoute(token) as any);
 
-  if (!isAuthorized) {
+    if (!isAuthorized) {
+      return {
+        redirect: {
+          destination: "/users/login",
+        },
+        props: {},
+      };
+    }
+
+    return {
+      props: {},
+    };
+  } catch (e) {
     return {
       redirect: {
         destination: "/users/login",
@@ -89,8 +102,4 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       props: {},
     };
   }
-
-  return {
-    props: {},
-  };
 };
