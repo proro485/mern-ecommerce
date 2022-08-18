@@ -174,8 +174,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       },
     };
   } catch (e) {
-    console.log("Error", e);
-
     return {
       redirect: {
         destination: "/users/login",
