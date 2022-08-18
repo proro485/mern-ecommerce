@@ -1,11 +1,65 @@
+import axios from "axios";
 import Image from "next/image";
-import { useAppSelector } from "../app/hooks";
+import { useRouter } from "next/router";
+import { useToasts } from "react-toast-notifications";
+import { useAppDispatch, useAppSelector } from "../app/hooks";
+import { setCart } from "../app/slices/cartSlice";
 
 const Payment = () => {
+  const router = useRouter();
+  const { addToast } = useToasts();
+  const dispatch = useAppDispatch();
+
+  const user = useAppSelector((state) => state.user.user);
   const cartItems = useAppSelector((state) => state.cart.cartItems);
   const shippingAddress = useAppSelector((state) => state.cart.shippingAddress);
 
-  const handleClick = () => {};
+  const handleClick = async () => {
+    try {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
+
+      const itemsPrice = cartItems.reduce(
+        (a, b) => a + b.product.price * b.quantity,
+        0
+      );
+
+      const orderDetails = {
+        _id: user?._id,
+        orderItems: cartItems,
+        shippingAddress,
+        taxPrice: (itemsPrice * 0.15).toFixed(2),
+        shippingPrice: 0.0,
+        totalPrice: (itemsPrice * 1.15).toFixed(2),
+        paidAt: new Date(),
+      };
+
+      const { data } = await axios.post("/api/orders", orderDetails, config);
+
+      if (!data.error) {
+        localStorage.removeItem("cartItems");
+        dispatch(setCart({ cartItems: [] }));
+        router.replace(`/users/profile`);
+        addToast(data.message, {
+          appearance: "success",
+          autoDismiss: true,
+        });
+      } else {
+        addToast(data.error, {
+          appearance: "error",
+          autoDismiss: true,
+        });
+      }
+    } catch (e) {
+      addToast("Client Side Error", {
+        appearance: "error",
+        autoDismiss: true,
+      });
+    }
+  };
 
   return (
     <div className="flex justify-center">
@@ -23,7 +77,10 @@ const Payment = () => {
           <div className="border-px border-slate-800 border-b-0">
             {cartItems.map((item) => {
               return (
-                <div className="flex items-center justify-between px-2 sm:px-5 py-3 border-b-px border-slate-800 space-x-4">
+                <div
+                  className="flex items-center justify-between px-2 sm:px-5 py-3 border-b-px border-slate-800 space-x-4"
+                  key={item.product._id}
+                >
                   <div className="flex items-center space-x-5">
                     <Image
                       src={`/${item.product.image}`}
@@ -88,7 +145,6 @@ const Payment = () => {
             <div className="text-xl font-semibold px-5 py-3 border-b-px border-slate-800"></div>
             <div className="flex justify-center pt-5">
               <button
-                disabled={!cartItems.length}
                 onClick={handleClick}
                 className="sm:text-lg bg-slate-800 text-white py-3 sm:py-3 w-full mx-3 sm:w-1/2"
               >

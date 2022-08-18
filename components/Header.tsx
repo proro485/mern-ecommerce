@@ -18,7 +18,7 @@ const Header = () => {
 
   useEffect(() => {
     const cartItems = JSON.parse(localStorage.getItem("cartItems") || "[]");
-    const user = JSON.parse(localStorage.getItem("user") || "{}");
+    const user = JSON.parse(localStorage.getItem("user") || "null");
     const shippingAddress = JSON.parse(
       localStorage.getItem("shippingAddress") || "null"
     );
@@ -29,10 +29,10 @@ const Header = () => {
   }, []);
 
   const handleClick = async () => {
-    if (Object.entries(user).length) {
+    if (user) {
       const { data } = await axios.post("/api/users/logout");
       if (!data.error) {
-        dispatch(setUser({}));
+        dispatch(setUser(null));
         localStorage.removeItem("user");
         router.push("/");
         addToast(data.message, {
@@ -67,7 +67,7 @@ const Header = () => {
         <Link href="/users/profile">
           <span
             className={`flex text-md sm:text-lg cursor-pointer ${
-              Object.entries(user).length ? "visible" : "hidden"
+              user ? "visible" : "hidden"
             }`}
           >
             <BsPerson className="mr-2" size={22} />
@@ -78,13 +78,13 @@ const Header = () => {
           className="flex text-md sm:text-lg cursor-pointer"
           onClick={handleClick}
         >
-          {Object.entries(user).length ? (
+          {user ? (
             <IoIosLogOut className="mr-2" size={22} />
           ) : (
             <BsPerson className="mr-2" size={22} />
           )}
 
-          {Object.entries(user).length ? "Logout" : "Sign In"}
+          {user ? "Logout" : "Sign In"}
         </span>
       </span>
     </div>

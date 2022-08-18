@@ -64,7 +64,10 @@ const Cart = () => {
           <div className="border-px border-slate-800 border-b-0">
             {cartItems.map((item) => {
               return (
-                <div className="flex items-center justify-between px-2 sm:px-10 py-3 border-b-px border-slate-800 space-x-4">
+                <div
+                  className="flex items-center justify-between px-2 sm:px-10 py-3 border-b-px border-slate-800 space-x-4"
+                  key={item.product._id}
+                >
                   <Image
                     src={`/${item.product.image}`}
                     height={70}
