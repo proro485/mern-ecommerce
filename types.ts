@@ -1,3 +1,5 @@
+import { CartItem } from "./app/slices/cartSlice";
+
 export interface Product {
   _id: string;
   name: string;
@@ -26,6 +28,13 @@ export interface User {
   isAdmin: boolean;
 }
 
+export interface Order {
+  orderItems: CartItem[];
+  totalPrice: Number;
+  paidAt: Date;
+}
+
 export interface ProfileProps {
   user: User;
+  orders: Order[];
 }

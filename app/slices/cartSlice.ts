@@ -1,12 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { Product } from "../../types";
 
-interface CartItem {
+export interface CartItem {
   product: Product;
   quantity: number;
 }
 
-interface ShippingAddress {
+export interface ShippingAddress {
   address: string;
   city: string;
   postalCode: string;

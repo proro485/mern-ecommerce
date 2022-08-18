@@ -6,6 +6,7 @@ import { useToasts } from "react-toast-notifications";
 import { useAppDispatch } from "../../app/hooks";
 import { setUser } from "../../app/slices/userSlice";
 import protectRoute from "../../middleware/protectRoute";
+import Order from "../../models/orderModel";
 import User from "../../models/userModel";
 import { ProfileProps } from "../../types";
 import connectMongo from "../../utils/connectMongo";
@@ -22,6 +23,12 @@ const Profile = (props: ProfileProps) => {
     dispatch(setUser(props.user));
     localStorage.setItem("user", JSON.stringify(props.user));
   }, []);
+
+  const getDate = (date: any) => {
+    const parsedDate = Date.parse(date);
+    const newDate = new Date(parsedDate);
+    return `${newDate.toLocaleDateString()} | ${newDate.toLocaleTimeString()}`;
+  };
 
   const handleUpdateProfile = async () => {
     try {
@@ -75,6 +82,18 @@ const Profile = (props: ProfileProps) => {
             <div className="text-xl sm:text-3xl font-semibold pb-2 border-b-2">
               Orders
             </div>
+            {props.orders.map((order, index) => {
+              return (
+                <div
+                  className="mt-5 py-3 px-5 flex justify-between border-px border-slate-800"
+                  key={index}
+                >
+                  <span className="font-semibold">Order {index + 1}</span>
+                  <span>${order.totalPrice.toString()}</span>
+                  <span>{getDate(order.paidAt)}</span>
+                </div>
+              );
+            })}
           </div>
         </div>
         <div className="flex flex-col border-px border-slate-800 px-4 py-5 sm:px-10 sm:py-10 space-y-3 sm:space-y-5">
@@ -137,6 +156,9 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     const data = await User.findById(isAuthorized.id).select("-password");
     const user = JSON.parse(JSON.stringify(data));
 
+    const ordersData = await Order.find({ userId: user._id });
+    const orders = JSON.parse(JSON.stringify(ordersData));
+
     if (!user) {
       return {
         redirect: {
@@ -154,9 +176,12 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
           email: user.email,
           isAdmin: user.isAdmin,
         },
+        orders: orders,
       },
     };
   } catch (e) {
+    console.log("Error", e);
+
     return {
       redirect: {
         destination: "/users/login",

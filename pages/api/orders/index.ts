@@ -1,13 +1,12 @@
 import { NextApiHandler } from "next";
 import Order from "../../../models/orderModel";
-import User from "../../../models/userModel";
 import connectMongo from "../../../utils/connectMongo";
 
 const orderHandler: NextApiHandler = async (req, res) => {
   if (req.method === "POST") {
     try {
       const {
-        _id,
+        userId,
         orderItems,
         shippingAddress,
         taxPrice,
@@ -18,10 +17,8 @@ const orderHandler: NextApiHandler = async (req, res) => {
 
       await connectMongo();
 
-      const user = await User.findById({ _id });
-
       const newOrder = {
-        user,
+        userId,
         orderItems,
         shippingAddress,
         taxPrice,

@@ -28,7 +28,7 @@ const Payment = () => {
       );
 
       const orderDetails = {
-        _id: user?._id,
+        userId: user?._id,
         orderItems: cartItems,
         shippingAddress,
         taxPrice: (itemsPrice * 0.15).toFixed(2),
@@ -54,6 +54,8 @@ const Payment = () => {
         });
       }
     } catch (e) {
+      console.log("Error :", e);
+
       addToast("Client Side Error", {
         appearance: "error",
         autoDismiss: true,
